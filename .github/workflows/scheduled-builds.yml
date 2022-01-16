@@ -1,0 +1,29 @@
+# .github/workflows/scheduled-builds.yml
+name: Trigger Site Rebuild on a CRON Schedule
+
+on:
+  schedule:
+    # Runs "at minute 55 past every hour" (see https://crontab.guru)
+    - cron: '30 * * * *'
+    - cron: '35 * * * *'
+    
+jobs:
+  build:
+    name: Trigger Send Email
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send mail
+        uses: dawidd6/action-send-mail@v3.6.0
+        with:
+          # Required mail server address:
+          server_address: smtp.gmail.com
+          # Required mail server port:
+          server_port: 465
+          # Required mail subject:
+          subject: Github Actions job result
+          # Required recipients' addresses:
+          to: hikmetkoseogludev@gmail.com,hikmet.koseoglu@boun.edu.tr
+          # Required sender full name (address can be skipped):
+          from: Hikmet Can Koseoglu # <user@example.com>
+          # Optional whether this connection use TLS (default is true if server_port is 465)
+          secure: true
