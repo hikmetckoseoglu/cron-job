@@ -1,0 +1,21 @@
+# .github/workflows/scheduled-builds.yml
+name: Trigger Site Rebuild on a CRON Schedule
+
+on:
+  schedule:
+    # Runs "at minute 55 past every hour" (see https://crontab.guru)
+    - cron: '50 * * * *'
+    
+jobs:
+  build:
+    name: Trigger Send Email
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send mail
+        uses: cygnetdigital/wait_for_response@v2.0.0
+        with:
+          url: 'http://localhost:8081/'
+          responseCode: '200,500'
+          timeout: 2000
+          interval: 500
+      - run: echo "123"
